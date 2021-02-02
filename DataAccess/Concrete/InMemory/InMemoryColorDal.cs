@@ -2,16 +2,17 @@
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryColorDal : IColorDal
     {
-        List<Color> _color;
+        List<Color> _colors;
         public InMemoryColorDal()
         {
-            _color = new List<Color>
+            _colors = new List<Color>
             {
                 new Color { ColorId=1, ColorName="White" },
                 new Color { ColorId=2, ColorName="Yellow" },
@@ -25,9 +26,27 @@ namespace DataAccess.Concrete.InMemory
             };
               
         }
+
+        public void Add(Color color)
+        {
+            _colors.Add(color);
+        }
+
+        public void Delete(Color color)
+        {
+            Color colorToDelete = _colors.SingleOrDefault(co => co.ColorId == color.ColorId);
+        }
+
         public List<Color> GetAll()
         {
-            return _color;
+            return _colors;
+        }
+
+        public void Update(Color color)
+        {
+            Color colorToUpdate = _colors.SingleOrDefault(co => co.ColorId == color.ColorId);
+            colorToUpdate.ColorId = color.ColorId;
+            colorToUpdate.ColorName = color.ColorName;
         }
     }
 }

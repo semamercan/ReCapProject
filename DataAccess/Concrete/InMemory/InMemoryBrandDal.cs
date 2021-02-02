@@ -2,6 +2,7 @@
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
@@ -22,10 +23,26 @@ namespace DataAccess.Concrete.InMemory
 
         }
 
+        public void Add(Brand brand)
+        {
+            _brands.Add(brand);
+        }
+
+        public void Delete(Brand brand)
+        {
+            Brand brandToDelete = _brands.SingleOrDefault(b => b.BrandId == brand.BrandId);
+        }
+
         public List<Brand> GetAll()
         {
             return _brands;
         }
 
+        public void Update(Brand brand)
+        {
+            Brand brandToUpdate = _brands.SingleOrDefault(b => b.BrandId == brand.BrandId);
+            brandToUpdate.BrandId = brand.BrandId;
+            brandToUpdate.BrandName = brand.BrandName;
+        }
     }
 }
